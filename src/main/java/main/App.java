@@ -1,84 +1,75 @@
 //Nimi: Aida Liukkonen
-//Päivämäärä: 19.1.2026
-//Tehtävä: viikko2
+//Päivämäärä: 26.1.2026
+//Tehtävä: viikko3
 
 package main;
 
-/**
- * Hello world!
- *
- */
+import java.util.ArrayList;
 import java.util.Scanner;
-public class App {
-        public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Anna auton merkki: ");
-        String brand = sc.nextLine();
-        System.out.print("Anna auton malli: ");
-        String model = sc.nextLine();
-        Car car = new Car(brand, model);
-        int choice = -1;
 
-        while (choice != 0){
-            System.out.println("1) Näytä auton tila");
-            System.out.println("2) Muokkaa auton merkkiä ja mallia");
-            System.out.println("3) Kiihdytä autoa");
-            System.out.println("4) Hidasta autoa");
+public class App {
+
+        public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        Safe safe = new Safe("0000");
+
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.println("1) Aseta PIN-koodi");
+            System.out.println("2) Lisää tietoja kansioon");
+            System.out.println("3) Listaa tiedot kansiosta");
             System.out.println("0) Lopeta ohjelma");
 
-            choice = sc.nextInt();
-            sc.nextLine();
+            if (sc.hasNext()) {
+                int i = 0;
+                String input = sc.nextLine();
+                i = Integer.parseInt(input);
 
-            switch (choice) {
+                switch (i) {
 
-                case 1:
-                    car.status();
-                    break;
+                    case 1:
+                        System.out.println("Anna uusi PIN-koodi:");
+                        String newPin = sc.nextLine();
+                        safe.changePin(newPin);
+                        break;
 
-                case 2:
-                    System.out.print("Anna uusi auton merkki: ");
-                    String newBrand = sc.nextLine();
+                    case 2:
+                        System.out.println("Anna kansioon lisättävä tieto:");
+                        String data = sc.nextLine();
+                        safe.addToSafe(data);
+                        break;
 
-                    System.out.print("Anna uusi auton malli: ");
-                    String newModel = sc.nextLine();
+                    case 3:
+                        System.out.println("Anna PIN-koodi:");
+                        String pin = sc.nextLine();
 
-                    car.setBrand(newBrand);
-                    car.setModel(newModel);
-                    break;
+                        ArrayList<String> items = safe.listItems(pin);
 
-                case 3:
-                    System.out.print("Kuinka monta km/h haluat kiihdyttää? ");
-                    int acc = sc.nextInt();
+                        if (items == null) {
+                            System.out.println("Väärä PIN-koodi!");
+                        } else {
+                            for (String s : items) {
+                                System.out.println(s);
+                            }
+                        }
+                        break;
+                        
+                    case 0:
+                        System.out.println("Kiitos ohjelman käytöstä.");
+                        exit = true;
+                        break;
 
-                    if (acc < 0) {
-                        System.out.println("Nopeuden täytyy olla positiivinen luku.");
-                    } else {
-                        car.accelerate(acc);
-                    }
-                    break;
-
-                case 4:
-                    System.out.print("Kuinka monta km/h haluat hidastaa? ");
-                    int dec = sc.nextInt();
-
-                    if (dec < 0) {
-                        System.out.println("Nopeuden täytyy olla positiivinen luku.");
-                    } else {
-                        car.decelerate(dec);
-                    }
-                    break;
-
-                case 0:
-                    System.out.println("Kiitos ohjelman käytöstä.");
-                    break;
-
-                default:
-                    System.out.println("Syöte oli väärä");
-                    break;
+                    default:
+                        System.out.println("Syöte oli väärä");
+                        break;
+                }
             }
-
         }
+
         sc.close();
     }
-
 }
+
