@@ -13,13 +13,12 @@ public class Player implements Serializable {
         this.name = name;
     }
 
-    public boolean attack(Monster target) {
-        System.out.println(name + " hyökkää " + target.getType() + " hirviöön!");
-        return target.takeDamage(10); // palauttaa true jos hirviö kuoli
-    }
+   public boolean attack(Monster target) {
+    return target.takeDamage(10); // palauttaa true jos hirviö kuoli
+}
 
-    public String getName() {
-        return name;
-    }
+public String getName() {
+    return name;
+}
 }
 
