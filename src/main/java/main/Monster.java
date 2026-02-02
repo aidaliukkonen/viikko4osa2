@@ -23,7 +23,6 @@ public class Monster implements Serializable {
         health -= dmg;
 
         if (health <= 0) {
-            System.out.println(type + " kuoli!");
             return true; // Hirviö kuoli
         } else {
             System.out.println("Hirviöllä on " + health + " elämää jäljellä.");
