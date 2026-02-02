@@ -42,8 +42,14 @@ public class App {
                     break;
 
                 case 2:
-                    cave.listMonsters();
+                    if (cave.monsterCount() == 0) {
+                        cave.listMonsters();   // tulostaa "Luola on tyhjä."
+                    } else {
+                        System.out.println("Luolan hirviöt:");
+                        cave.listMonsters();
+                    }
                     break;
+
 
                 case 3:
                     if (cave.monsterCount() == 0) {
