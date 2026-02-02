@@ -8,11 +8,12 @@ package main;
 import java.util.Scanner;
 
 public class App {
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Syötä pelaajan nimi: ");
+        System.out.println("Syötä pelaajan nimi: ");
         Player player = new Player(sc.nextLine());
 
         Cave cave = new Cave(player);
@@ -32,9 +33,9 @@ public class App {
             switch (i) {
 
                 case 1:
-                    System.out.print("Anna hirviön tyyppi: ");
+                    System.out.println("Anna hirviön tyyppi: ");
                     String type = sc.nextLine();
-                    System.out.print("Anna hirviön elämän määrä numerona: ");
+                    System.out.println("Anna hirviön elämän määrä numerona: ");
                     int hp = Integer.parseInt(sc.nextLine());
 
                     cave.addMonster(new Monster(type, hp));
@@ -46,7 +47,7 @@ public class App {
 
                 case 3:
                     if (cave.monsterCount() == 0) {
-                        System.out.println("Luolassa ei ole hirviöitä.");
+                        System.out.println("Luola on tyhjä.");
                         break;
                     }
 
