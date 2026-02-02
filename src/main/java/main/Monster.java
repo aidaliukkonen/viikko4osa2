@@ -30,14 +30,20 @@ public class Monster implements Serializable {
             return false; // Hirviö jäi henkiin
         }
     }
-
-     public String getType() {
+public String getType() {
         return type;
     }
 
     public int getHealth() {
         return health;
     }
-}
 
+    public String getName() {
+        return type;
+    }
+
+    public int getHp() {
+        return health;
+    }
+}
 

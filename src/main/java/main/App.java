@@ -13,7 +13,7 @@ public class App {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Syötä pelaajan nimi: ");
+        System.out.println("Syötä pelaajan nimi:");
         Player player = new Player(sc.nextLine());
 
         Cave cave = new Cave(player);
@@ -33,9 +33,9 @@ public class App {
             switch (i) {
 
                 case 1:
-                    System.out.println("Anna hirviön tyyppi: ");
+                    System.out.println("Anna hirviön tyyppi:");
                     String type = sc.nextLine();
-                    System.out.println("Anna hirviön elämän määrä numerona: ");
+                    System.out.println("Anna hirviön elämän määrä numerona:");
                     int hp = Integer.parseInt(sc.nextLine());
 
                     cave.addMonster(new Monster(type, hp));
@@ -51,24 +51,30 @@ public class App {
                         break;
                     }
 
+                    System.out.println("Valitse hirviö, johon hyökätä:");
                     cave.listMonsters();
-                    System.out.print("Valitse hirviö, johon hyökätä: ");
+
                     int idx = Integer.parseInt(sc.nextLine()) - 1;
 
                     Monster target = cave.getMonster(idx);
+
+                    System.out.println(player.getName() + " hyökkää " + target.getName() + " hirviöön!");
+
                     boolean died = cave.player.attack(target);
 
                     if (died) {
+                        System.out.println(target.getName() + " on kuollut!");
                         cave.removeMonster(idx);
                     }
                     break;
+
                 case 4:
-                    System.out.print("Anna tiedoston nimi, johon peli tallentaa: ");
+                    System.out.println("Anna tiedoston nimi, johon peli tallentaa:");
                     SaveLoad.save(cave, sc.nextLine());
                     break;
 
                 case 5:
-                    System.out.print("Anna tiedoston nimi, josta peli ladataan: ");
+                    System.out.println("Anna tiedoston nimi, josta peli ladataan:");
                     Cave loaded = SaveLoad.load(sc.nextLine());
                     if (loaded != null) {
                         cave = loaded;
