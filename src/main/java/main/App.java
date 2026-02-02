@@ -1,87 +1,71 @@
 //Nimi: Aida Liukkonen
-//Päivämäärä: 2.2.2026
-//Tehtävä: viikko4
-
+//Päivämäärä: 26.1.2026
+//Tehtävä: viikko3
 
 package main;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
-    public static void main(String[] args) {
+
+        public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Syötä pelaajan nimi: ");
-        Player player = new Player(sc.nextLine());
-
-        Cave cave = new Cave(player);
+        Safe safe = new Safe("0000");
 
         boolean exit = false;
 
         while (!exit) {
-            System.out.println("1) Lisää luolaan hirviö");
-            System.out.println("2) Listaa hirviöt");
-            System.out.println("3) Hyökkää hirviöön");
-            System.out.println("4) Tallenna peli");
-            System.out.println("5) Lataa peli");
-            System.out.println("0) Lopeta peli");
+            System.out.println("1) Aseta PIN-koodi");
+            System.out.println("2) Lisää tietoja kansioon");
+            System.out.println("3) Listaa tiedot kansiosta");
+            System.out.println("0) Lopeta ohjelma");
 
-            int i = Integer.parseInt(sc.nextLine());
+            if (sc.hasNext()) {
+                int i = 0;
+                String input = sc.nextLine();
+                i = Integer.parseInt(input);
 
-            switch (i) {
+                switch (i) {
 
-                case 1:
-                    System.out.print("Anna hirviön tyyppi: ");
-                    String type = sc.nextLine();
-                    System.out.print("Anna hirviön elämän määrä numerona: ");
-                    int hp = Integer.parseInt(sc.nextLine());
-
-                    cave.addMonster(new Monster(type, hp));
-                    break;
-
-                case 2:
-                    cave.listMonsters();
-                    break;
-
-                case 3:
-                    if (cave.monsterCount() == 0) {
-                        System.out.println("Luolassa ei ole hirviöitä.");
+                    case 1:
+                        System.out.println("Anna uusi PIN-koodi:");
+                        String newPin = sc.nextLine();
+                        safe.changePin(newPin);
                         break;
-                    }
 
-                    cave.listMonsters();
-                    System.out.print("Valitse hirviö, johon hyökätä: ");
-                    int idx = Integer.parseInt(sc.nextLine()) - 1;
+                    case 2:
+                        System.out.println("Anna kansioon lisättävä tieto:");
+                        String data = sc.nextLine();
+                        safe.addToSafe(data);
+                        break;
 
-                    Monster target = cave.getMonster(idx);
-                    boolean died = cave.player.attack(target);
+                    case 3:
+                        System.out.println("Anna PIN-koodi:");
+                        String pin = sc.nextLine();
 
-                    if (died) {
-                        cave.removeMonster(idx);
-                    }
-                    break;
-                case 4:
-                    System.out.print("Anna tiedoston nimi, johon peli tallentaa: ");
-                    SaveLoad.save(cave, sc.nextLine());
-                    break;
+                        ArrayList<String> items = safe.listItems(pin);
 
-                case 5:
-                    System.out.print("Anna tiedoston nimi, josta peli ladataan: ");
-                    Cave loaded = SaveLoad.load(sc.nextLine());
-                    if (loaded != null) {
-                        cave = loaded;
-                    }
-                    break;
+                        if (items == null) {
+                            System.out.println("Väärä PIN-koodi!");
+                        } else {
+                            for (String s : items) {
+                                System.out.println(s);
+                            }
+                        }
+                        break;
+                        
+                    case 0:
+                        System.out.println("Kiitos ohjelman käytöstä.");
+                        exit = true;
+                        break;
 
-                case 0:
-                    System.out.println("Peli päättyy. Kiitos pelaamisesta!");
-                    exit = true;
-                    break;
-
-                default:
-                    System.out.println("Syöte oli väärä.");
-                    break;
+                    default:
+                        System.out.println("Syöte oli väärä");
+                        break;
+                }
             }
         }
 
